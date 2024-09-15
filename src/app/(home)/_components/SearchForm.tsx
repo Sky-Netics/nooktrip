@@ -14,8 +14,8 @@ export default function SearchForm() {
     <div className="w-full bg-[#F5F5F5] rounded-xl sm:order-2 p-4">
       <form className="flex gap-6 flex-col items-start sm:flex-row sm:items-end">
         <div className="grid w-full sm:max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" placeholder="Email" />
+          <Label htmlFor="location">Location</Label>
+          <Input type="text" id="location" placeholder="Toronto" />
         </div>
 
         <FormDivider />
