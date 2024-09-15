@@ -35,7 +35,7 @@ export default async function page({
   return (
     <div>
       <p className="text-lg font-medium">Result:</p>
-      <div className="mt-2 grid gap-6">
+      <div className="mt-2 grid lg:grid-cols-2 gap-6">
         {data?.itenaries?.map((itinerary: Itinerary, index: number) => (
           <div
             key={itinerary.package_name}
@@ -76,10 +76,10 @@ export default async function page({
               {`duration: ${itinerary.total_duration}`}
             </p> */}
 
-            <span className="absolute right-6 top-4 text-primary-foreground font-extrabold">{`${itinerary.total_cost} ${itinerary.location_currency}`}</span>
+            <span className="max-sm:mt-4 sm:absolute right-6 top-4 text-primary-foreground font-extrabold">{`${itinerary.total_cost} ${itinerary.location_currency}`}</span>
 
-            <Button className="mt-4 justify-self-start" size="sm">
-              View Details <ChevronRight className="w-4 h-4" />
+            <Button className="mt-4 max-sm:absolute max-sm:bottom-4 max-sm:right-4 sm:justify-self-start" size="sm">
+              View Details <ChevronRight className="w-4 h-4 hidden sm:block" />
             </Button>
           </div>
         ))}
