@@ -1,5 +1,7 @@
+import { Stop } from "./stop";
+
 export type Itinerary = {
-  stops: [];
+  stops: Stop[];
   total_duration: string;
   total_cost: number;
   location_currency: string;

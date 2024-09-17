@@ -60,15 +60,13 @@ export async function searchItinerary({
         city: location,
         budget: budget,
         is_single: travelType == "solo",
-        email: 'me@gmi.com'
+        email: "me@gmi.com",
       }),
     };
 
     const response = await fetch(requestUrl, requestOptions);
 
     const data = await response.json();
-
-    console.log(data);
 
     if (response.status != 200) {
       return {
