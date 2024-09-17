@@ -1,7 +1,7 @@
 import { searchItinerary } from "@/actions/search.action";
 import { Button } from "@/components/ui/button";
 import { SearchItinerarySchema } from "@/schema/utils.schema";
-import { Itinerary } from "@/types/Itinerary";
+import { Itinerary } from "@/types/itinerary";
 import { SearchItinerary } from "@/types/utils";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
