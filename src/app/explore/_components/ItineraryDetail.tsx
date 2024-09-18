@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Itinerary } from "@/types/itinerary";
 import { Stop } from "@/types/stop";
 import { Fragment } from "react";
+import { GetItineraryDialog } from "./GetItineraryDialog";
 import IineraryDetailRoute from "./IineraryDetailRoute";
 import ItineraryDetailCard from "./ItineraryDetailCard";
 import ItinerarySummeryCard from "./ItinerarySummeryCard";
@@ -19,7 +18,7 @@ export default async function ItineraryDetail({
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
         <div className="md:basis-1/2  md:order-2 grid auto-rows-min justify-items-center">
           <ItinerarySummeryCard itinerary={itinerary} />
-          <GetItineraryButton className="hidden md:block" />
+          <GetItineraryDialog className="hidden md:flex" />
         </div>
         <div className="mt-6 md:mt-0 md:basis-1/2 flex justify-center md:justify-end">
           <div className="w-full flex flex-col max-w-md items-end justify-start">
@@ -34,18 +33,8 @@ export default async function ItineraryDetail({
           </div>
         </div>
 
-        <GetItineraryButton className="md:hidden" />
+        <GetItineraryDialog className="md:hidden" />
       </div>
     </>
   );
 }
-
-const GetItineraryButton = ({
-  className,
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <Button className={cn("mt-6 px-12 font-semibold", className)}>
-      Get Your Itinerary
-    </Button>
-  );
-};
