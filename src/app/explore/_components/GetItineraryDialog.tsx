@@ -56,7 +56,7 @@ export const GetItineraryDialog = ({
             required
           />
           <div className="flex items-center space-x-2 mt-2">
-            <Checkbox id="terms" />
+            <Checkbox id="terms" required />
             <Label
               htmlFor="terms"
               className="text-xs font-light italic peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
