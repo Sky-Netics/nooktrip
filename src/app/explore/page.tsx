@@ -29,8 +29,9 @@ export default async function page({
     return <div>Error Happend!</div>;
   }
 
+  const decodedDetails = decodeURIComponent(detail ?? "");
   const selectedItinerary: Itinerary = data?.itenaries?.find(
-    (itinerary: Itinerary) => itinerary.package_name === detail
+    (itinerary: Itinerary) => itinerary.package_name === decodedDetails
   );
 
   if (selectedItinerary) {
@@ -45,7 +46,9 @@ export default async function page({
               key={itinerary.package_name}
               itinerary={itinerary}
               number={index + 1}
-              link={`/explore?location=${location}&travelType=${travelType}&budget=${budget}&detail=${itinerary.package_name}`}
+              link={`/explore?location=${location}&travelType=${travelType}&budget=${budget}&detail=${encodeURIComponent(
+                itinerary.package_name
+              )}`}
             />
           ))}
         </div>
