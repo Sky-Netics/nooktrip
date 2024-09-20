@@ -39,7 +39,7 @@ export default function ItineraryCard({itinerary, number, link}: {itinerary: Iti
 
               <p className="mt-6 text-sm">{itinerary.summary}</p>
 
-              <span className="max-sm:mt-4 sm:absolute right-6 top-4 text-primary-foreground font-extrabold">{`${itinerary.total_cost} ${itinerary.location_currency}`}</span>
+              <span className="max-sm:mt-4 sm:absolute right-6 top-4 text-primary-foreground font-extrabold">{`${itinerary.total_cost} CAD`}</span>
 
               <Link
                 href={link}
