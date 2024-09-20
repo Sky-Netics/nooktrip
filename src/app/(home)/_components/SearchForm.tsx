@@ -12,10 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useFormState } from "react-dom";
+import { Loader2 } from "lucide-react";
+import { useFormState, useFormStatus } from "react-dom";
 
 export default function SearchForm() {
-  const [state, action] = useFormState(validateSearchItinerary, {zodErrors: {}});
+  const [state, action] = useFormState(validateSearchItinerary, {
+    zodErrors: {},
+  });
 
   return (
     <div className="w-full bg-[#F5F5F5] rounded-xl sm:order-2 p-4">
@@ -33,7 +36,6 @@ export default function SearchForm() {
             required
           />
           <FormMessage message={state.zodErrors?.location} type="error" />
-
         </div>
 
         <FormDivider />
@@ -50,7 +52,6 @@ export default function SearchForm() {
             </SelectContent>
           </Select>
           <FormMessage message={state.zodErrors?.travelType} type="error" />
-
         </div>
 
         <FormDivider />
@@ -67,15 +68,24 @@ export default function SearchForm() {
           />
           <FormMessage message={state.zodErrors?.budget} type="error" />
         </div>
-
-        <Button type="submit" className="px-8 font-semibold sm:mt-5">
-          Search
-        </Button>
+        <SubmitButton />
       </form>
     </div>
   );
 }
 
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      type="submit"
+      className="px-8 font-semibold sm:mt-5"
+      disabled={pending}
+    >
+      {pending ? <Loader2 className="w-4 h-4 mx-4 animate-spin" /> : "Search"}
+    </Button>
+  );
+};
 const FormDivider = () => {
   return <div className="hidden sm:block h-14 w-px border-amber-500 border" />;
 };
