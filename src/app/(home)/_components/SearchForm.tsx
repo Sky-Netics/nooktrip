@@ -86,6 +86,7 @@ const SubmitButton = () => {
     </Button>
   );
 };
+
 const FormDivider = () => {
   return <div className="hidden sm:block h-14 w-px border-amber-500 border" />;
 };

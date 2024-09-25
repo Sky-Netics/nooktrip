@@ -1,5 +1,7 @@
 "use client";
 
+import { sendMail } from "@/actions/email.action";
+import { FormMessage } from "@/components/FormMessage";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -14,22 +16,42 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { FormEvent, useState } from "react";
+import { Itinerary } from "@/types/itinerary";
+import { Loader2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 
 export const GetItineraryDialog = ({
   className,
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+  itinerary,
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  itinerary: Itinerary;
+}) => {
+  const ref = useRef<HTMLFormElement>(null);
+
   const [open, setOpen] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [state, action] = useFormState(sendMail, {
+    success: false,
+    zodErrors: {},
+    errorMessage: "",
+  });
 
-    toast({
-      description: "Itinerary has been sent to your email.",
-      variant: "success"
-    });
-    setOpen(false);
-  };
+  console.log(state);
+
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        description: "Itinerary has been sent to your email.",
+        variant: "success",
+      });
+      setOpen(false);
+      ref.current?.reset();
+    }
+  }, [state.success]);
+
+  console.log("open:", open);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -44,7 +66,7 @@ export const GetItineraryDialog = ({
           </DialogTitle>
         </DialogHeader>
 
-        <form className="grid gap-2 mt-2" onSubmit={(e) => handleSubmit(e)}>
+        <form className="grid gap-2 mt-2" action={action} ref={ref}>
           <Label htmlFor="email" className="text-sm font-normal">
             Enter your email to receive your trip details.
           </Label>
@@ -55,6 +77,12 @@ export const GetItineraryDialog = ({
             placeholder="Explore@NookTrip.ca"
             required
           />
+          <FormMessage message={state.zodErrors?.email} type="error" />
+          <Input
+            name="itinerary"
+            type="hidden"
+            value={JSON.stringify(itinerary)}
+          />
           <div className="flex items-center space-x-2 mt-2">
             <Checkbox id="terms" required />
             <Label
@@ -64,14 +92,28 @@ export const GetItineraryDialog = ({
               By clicking &quot;Send,&quot; you agree to receive emails from
               NookTrip.
             </Label>
+            <FormMessage message={[state.errorMessage ?? ""]} type="error" />
           </div>
           <DialogFooter className="mt-6 items-center sm:!justify-center">
-            <Button size="lg" type="submit" className="font-bold px-8 py-5">
-              Send
-            </Button>
+            <SubmitButton />
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
+  );
+};
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      size="lg"
+      type="submit"
+      className="font-bold px-8 py-5"
+      disabled={pending}
+    >
+      {/* <Loader2 className="w-4 h-4 mx-3 animate-spin" /> */}
+      {pending ? <Loader2 className="w-4 h-4 mx-3 animate-spin" /> : "Send"}
+    </Button>
   );
 };
