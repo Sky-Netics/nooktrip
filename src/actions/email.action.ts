@@ -47,11 +47,8 @@ export async function sendMail(
     };
 
     const response = await fetch(requestUrl, requestOptions);
-
     const data = await response.json();
 
-    console.log(data);
-    
     if (response.status != 200) {
       return {
         success: false,
@@ -60,9 +57,7 @@ export async function sendMail(
       };
     }
 
-    return {
-      success: true,
-    };
+    return { success: true, zodErrors: {}, errorMessage: "" };
   } catch (error) {
     console.log("error:", error);
 
