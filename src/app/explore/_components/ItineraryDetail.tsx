@@ -11,6 +11,7 @@ export default async function ItineraryDetail({
 }: {
   itinerary: Itinerary;
 }) {
+  
   return (
     <>
       {/* <BackButton /> */}
@@ -23,10 +24,10 @@ export default async function ItineraryDetail({
         <div className="mt-6 md:mt-0 md:basis-1/2 flex justify-center md:justify-end">
           <div className="w-full flex flex-col max-w-md items-end justify-start">
             {itinerary.stops?.map((stop: Stop, index: number) => (
-              <Fragment key={stop.start}>
+              <Fragment key={stop.location_name}>
                 <ItineraryDetailCard stop={stop} number={index + 1} />
                 {index < itinerary.stops.length - 1 && (
-                  <IineraryDetailRoute route="https://www.google.com/maps?q=43.6273,-79.3825" />
+                  <IineraryDetailRoute route={stop.path_to_next} />
                 )}
               </Fragment>
             ))}

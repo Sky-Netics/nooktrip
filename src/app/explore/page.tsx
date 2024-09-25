@@ -30,7 +30,7 @@ export default async function page({
   }
 
   const decodedDetails = decodeURIComponent(detail ?? "");
-  const selectedItinerary: Itinerary = data?.itenaries?.find(
+  const selectedItinerary: Itinerary = data?.itineraries?.find(
     (itinerary: Itinerary) => itinerary.package_name === decodedDetails
   );
 
@@ -41,7 +41,7 @@ export default async function page({
       <div>
         <p className="text-lg font-medium">Result:</p>
         <div className="mt-2 grid gap-6">
-          {data?.itenaries?.map((itinerary: Itinerary, index: number) => (
+          {data?.itineraries?.map((itinerary: Itinerary, index: number) => (
             <ItineraryCard
               key={itinerary.package_name}
               itinerary={itinerary}

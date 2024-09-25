@@ -1,7 +1,8 @@
 export type Stop = {
-  start: string;
+  location_name: string;
   duration: string;
   cost: number;
   currency: string;
-  location?: string;
+  google_map_coordinates: string;
+  path_to_next: string;
 };

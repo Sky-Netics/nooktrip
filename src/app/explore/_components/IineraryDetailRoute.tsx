@@ -18,7 +18,7 @@ export default function IineraryDetailRoute({ route }: { route: string }) {
           alt="route"
         />
       </div>
-      <p className="text-xs text-[11px] pe-1">{route}</p>
+      <p className="text-xs text-[11px] pe-1 break-all">{route}</p>
     </Link>
   );
 }
