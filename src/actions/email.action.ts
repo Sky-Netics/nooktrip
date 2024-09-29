@@ -47,7 +47,7 @@ export async function sendMail(
     };
 
     const response = await fetch(requestUrl, requestOptions);
-    const data = await response.json();
+    const data = await response.json();    
 
     if (response.status != 200) {
       return {

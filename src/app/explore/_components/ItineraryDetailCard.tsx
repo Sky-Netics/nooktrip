@@ -17,8 +17,8 @@ export default function ItineraryDetailCard({
         {number}
       </p>
       <div className="flex-1 flex flex-col gap-4 items-start text-primary-foreground text-sm">
-        <p className="text-base font-medium flex-1">{stop.location_name}</p>
-        {stop.google_map_coordinates && (
+        <p className="text-base font-medium flex-1">{stop.location_title}</p>
+        {stop.location_address && (
           <p className="flex gap-2">
             <Image
               className="w-4 h-4"
@@ -27,7 +27,7 @@ export default function ItineraryDetailCard({
               height={50}
               alt="location"
             />
-            <span>{stop.google_map_coordinates}</span>
+            <span>{stop.location_address}</span>
           </p>
         )}
 

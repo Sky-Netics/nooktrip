@@ -1,5 +1,6 @@
 export type Stop = {
-  location_name: string;
+  location_title: string;
+  location_address: string;
   duration: string;
   cost: number;
   currency: string;

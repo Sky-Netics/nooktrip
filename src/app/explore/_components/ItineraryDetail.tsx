@@ -26,7 +26,7 @@ export default async function ItineraryDetail({
         <div className="mt-6 md:mt-0 md:basis-1/2 flex justify-center md:justify-end">
           <div className="w-full flex flex-col max-w-md items-end justify-start">
             {itinerary.stops?.map((stop: Stop, index: number) => (
-              <Fragment key={stop.location_name}>
+              <Fragment key={stop.location_address}>
                 <ItineraryDetailCard stop={stop} number={index + 1} />
                 {index < itinerary.stops.length - 1 && (
                   <IineraryDetailRoute route={stop.path_to_next} />
