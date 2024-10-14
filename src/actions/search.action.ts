@@ -37,7 +37,7 @@ export async function searchItinerary({
   budget,
 }: SearchItinerary) {
   const requestUrl =
-    "https://0stk26giz1.execute-api.us-east-2.amazonaws.com/Prod/itineraries";
+    "https://aczo43c13c.execute-api.us-east-2.amazonaws.com/dev/itineraries";
 
   try {
     const validationFields = SearchItinerarySchema.safeParse({

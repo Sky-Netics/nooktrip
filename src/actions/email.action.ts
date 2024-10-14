@@ -21,7 +21,7 @@ export async function sendMail(
   formData: FormData
 ): Promise<SendMailProps> {
   const requestUrl =
-    "https://0stk26giz1.execute-api.us-east-2.amazonaws.com/Prod/emails";
+    "https://aczo43c13c.execute-api.us-east-2.amazonaws.com/dev/emails";
   try {
     const email = formData.get("email");
     const itinerary = JSON.parse(formData.get("itinerary") as string);
