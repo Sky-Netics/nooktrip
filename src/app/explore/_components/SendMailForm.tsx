@@ -35,8 +35,8 @@ export default function SendMailForm({
   }, [state.success, closeDialog]);
 
   return (
-    <form className="grid gap-2 mt-2" action={action}>
-      <Label htmlFor="email" className="text-sm font-normal">
+    <form className="grid gap-2 mt-4" action={action}>
+      <Label htmlFor="email" className="text-sm md:text-base font-normal">
         Enter your email to receive your trip details.
       </Label>
       <Input
@@ -52,14 +52,14 @@ export default function SendMailForm({
         <Checkbox id="terms" required />
         <Label
           htmlFor="terms"
-          className="text-xs font-light italic peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          className="text-xs md:text-sm font-light italic peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           By clicking &quot;Send,&quot; you agree to receive emails from
           NookTrip.
         </Label>
       </div>
       <FormMessage message={[state.errorMessage ?? ""]} type="error" />
-      <DialogFooter className="mt-6 items-center sm:!justify-center">
+      <DialogFooter className="mt-4 items-center sm:!justify-center">
         <SubmitButton />
       </DialogFooter>
     </form>
@@ -72,7 +72,7 @@ const SubmitButton = () => {
     <Button
       size="lg"
       type="submit"
-      className="font-bold px-8 py-5"
+      className="font-bold px-8 py-5 md:text-base"
       disabled={pending}
     >
       {pending ? <Loader2 className="w-4 h-4 mx-3 animate-spin" /> : "Send"}
