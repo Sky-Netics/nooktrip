@@ -1,6 +1,8 @@
 "use client";
 
-import { validateSearchItinerary } from "@/actions/search.action";
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { SearchItinerarySchema } from "@/schema/utils.schema";
 import { FormMessage } from "@/components/FormMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,17 +15,51 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { useFormState, useFormStatus } from "react-dom";
+
+interface FormState {
+  zodErrors?: Record<string, string[]>;
+}
 
 export default function SearchForm() {
-  const [state, action] = useFormState(validateSearchItinerary, {
-    zodErrors: {},
+  const [formState, setFormState] = useState<FormState>({
+    zodErrors: undefined,
   });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const location = formData.get("location") as string;
+    const travelType = formData.get("travelType") as string;
+    const budget = formData.get("budget") as string;
+
+    const validationFields = SearchItinerarySchema.safeParse({
+      location,
+      travelType,
+      budget: budget,
+    });
+
+    if (!validationFields.success) {
+      setFormState({
+        zodErrors: validationFields.error.flatten().fieldErrors,
+      });
+      setIsSubmitting(false);
+    } else {
+      router.push(
+        `/explore?location=${location}&travelType=${travelType}&budget=${budget}`
+      );
+      setFormState({ zodErrors: undefined });
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="w-full bg-[#F5F5F5] rounded-xl sm:order-2 p-4">
       <form
-        action={action}
+        onSubmit={handleSubmit}
         className="flex gap-6 flex-col items-start sm:flex-row"
       >
         <div className="grid w-full sm:max-w-sm items-center gap-1.5">
@@ -35,23 +71,23 @@ export default function SearchForm() {
             placeholder="Toronto"
             required
           />
-          <FormMessage message={state.zodErrors?.location} type="error" />
+          <FormMessage message={formState.zodErrors?.location} type="error" />
         </div>
 
         <FormDivider />
+
         <div className="grid w-full sm:max-w-sm items-center gap-1.5">
           <Label htmlFor="travelComposite">Travel Composite</Label>
           <Select defaultValue="solo" name="travelType" required>
             <SelectTrigger>
               <SelectValue placeholder="Select travel type" />
             </SelectTrigger>
-
             <SelectContent>
               <SelectItem value="solo">Solo Traveler</SelectItem>
               <SelectItem value="couple">Couple Travelers</SelectItem>
             </SelectContent>
           </Select>
-          <FormMessage message={state.zodErrors?.travelType} type="error" />
+          <FormMessage message={formState.zodErrors?.travelType} type="error" />
         </div>
 
         <FormDivider />
@@ -66,27 +102,32 @@ export default function SearchForm() {
             required
             min={0}
           />
-          <FormMessage message={state.zodErrors?.budget} type="error" />
+          <FormMessage message={formState.zodErrors?.budget} type="error" />
         </div>
-        <SubmitButton />
+        <SubmitButton isSubmitting={isSubmitting} />
       </form>
     </div>
   );
 }
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type="submit"
-      className="px-8 font-semibold sm:mt-5"
-      disabled={pending}
-    >
-      {pending ? <Loader2 className="w-4 h-4 mx-4 animate-spin" /> : "Search"}
-    </Button>
-  );
-};
+interface SubmitButtonProps {
+  isSubmitting: boolean;
+}
 
-const FormDivider = () => {
-  return <div className="hidden sm:block h-14 w-px border-amber-500 border" />;
-};
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting }) => (
+  <Button
+    type="submit"
+    className="px-8 font-semibold sm:mt-5"
+    disabled={isSubmitting}
+  >
+    {isSubmitting ? (
+      <Loader2 className="w-4 h-4 mx-4 animate-spin" />
+    ) : (
+      "Search"
+    )}
+  </Button>
+);
+
+const FormDivider: React.FC = () => (
+  <div className="hidden sm:block h-14 w-px border-amber-500 border" />
+);
