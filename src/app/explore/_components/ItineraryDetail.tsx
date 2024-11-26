@@ -1,5 +1,5 @@
-import { Itinerary } from "@/types/itinerary";
-import { Stop } from "@/types/stop";
+import { Itinerary } from '@/types/itinerary';
+import { Stop } from '@/types/stop';
 import { Fragment } from "react";
 import { GetItineraryDialog } from "./GetItineraryDialog";
 import IineraryDetailRoute from "./IineraryDetailRoute";

@@ -7,14 +7,25 @@ export default function ItinerarySummeryCard({
   itinerary: Itinerary;
 }) {
   return (
-    <div className=" bg-yellow-900 text-[#FFFFF0] p-4 md:p-6 rounded-lg ">
-      <Image
-        src="/explore/detail.png"
-        className="rounded-md w-[640px]"
-        width={700}
-        height={600}
-        alt="detail-image"
-      />
+    <div className="bg-yellow-900 text-[#FFFFF0] p-4 md:p-6 rounded-lg">
+      {itinerary.map_image ? (
+        <img
+          src={`data:image/png;base64,${itinerary.map_image}`}
+          className="rounded-md w-[640px]"
+          alt={`Route map for ${itinerary.package_name}`}
+          width={700}
+          height={600}
+        />
+      ) : (
+        // Fallback image in case map_image is not available
+        <Image
+          src="/explore/detail.png"
+          className="rounded-md w-[640px]"
+          width={700}
+          height={600}
+          alt="detail-image"
+        />
+      )}
       <p className="mt-4 text-base font-medium">{itinerary.summary}</p>
       <p className="mt-4 text-xs">
         <span className="font-semibold text-[13px] leading-tight">start: </span>

@@ -11,4 +11,5 @@ export type Itinerary = {
   end: string;
   total_distance: string;
   transport_mode: string;
+  map_image: string;  // Base64 encoded image
 };
