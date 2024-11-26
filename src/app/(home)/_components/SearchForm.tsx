@@ -1,6 +1,7 @@
 "use client";
 
-import { validateSearchItinerary } from "@/actions/search.action";
+import { useRouter } from "next/navigation";
+import { SearchItinerarySchema } from "@/schema/utils.schema";
 import { FormMessage } from "@/components/FormMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +14,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useRef, useState, FormEvent } from "react";
+
+interface FormState {
+  zodErrors?: Record<string, string[]>;
+}
 
 type LocationSuggestion = {
   properties: {
@@ -25,9 +29,11 @@ type LocationSuggestion = {
 };
 
 export default function SearchForm() {
-  const [state, action] = useFormState(validateSearchItinerary, {
-    zodErrors: {},
+  const router = useRouter();
+  const [formState, setFormState] = useState<FormState>({
+    zodErrors: undefined,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [inputValue, setInputValue] = useState(""); // For the input display
   const [searchQuery, setSearchQuery] = useState(""); // For API calls
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
@@ -83,10 +89,43 @@ export default function SearchForm() {
     setSearchQuery(value); // Only update search query when typing
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      location: formData.get("location"),
+      travelType: formData.get("travelType"),
+      budget: formData.get("budget"),
+    };
+
+    try {
+      const validatedData = SearchItinerarySchema.parse(data);
+      router.push(
+        `/explore?location=${validatedData.location}&travelType=${validatedData.travelType}&budget=${validatedData.budget}`
+      );
+    } catch (error: any) {
+      if (error.errors) {
+        const zodErrors: Record<string, string[]> = {};
+        error.errors.forEach((err: any) => {
+          const path = err.path[0];
+          if (!zodErrors[path]) {
+            zodErrors[path] = [];
+          }
+          zodErrors[path].push(err.message);
+        });
+        setFormState({ zodErrors });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full bg-[#F5F5F5] rounded-xl sm:order-2 p-4">
       <form
-        action={action}
+        onSubmit={handleSubmit}
         className="flex gap-6 flex-col items-start sm:flex-row"
       >
         <div className="grid w-full sm:max-w-sm items-center gap-1.5 relative">
@@ -131,23 +170,23 @@ export default function SearchForm() {
               ))}
             </div>
           )}
-          <FormMessage message={state.zodErrors?.location} type="error" />
+          <FormMessage message={formState.zodErrors?.location} type="error" />
         </div>
 
         <FormDivider />
+
         <div className="grid w-full sm:max-w-sm items-center gap-1.5">
           <Label htmlFor="travelComposite">Travel Composite</Label>
           <Select defaultValue="solo" name="travelType" required>
             <SelectTrigger>
               <SelectValue placeholder="Select travel type" />
             </SelectTrigger>
-
             <SelectContent>
               <SelectItem value="solo">Solo Traveler</SelectItem>
               <SelectItem value="couple">Couple Travelers</SelectItem>
             </SelectContent>
           </Select>
-          <FormMessage message={state.zodErrors?.travelType} type="error" />
+          <FormMessage message={formState.zodErrors?.travelType} type="error" />
         </div>
 
         <FormDivider />
@@ -162,27 +201,32 @@ export default function SearchForm() {
             required
             min={0}
           />
-          <FormMessage message={state.zodErrors?.budget} type="error" />
+          <FormMessage message={formState.zodErrors?.budget} type="error" />
         </div>
-        <SubmitButton />
+        <SubmitButton isSubmitting={isSubmitting} />
       </form>
     </div>
   );
 }
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type="submit"
-      className="px-8 font-semibold sm:mt-5"
-      disabled={pending}
-    >
-      {pending ? <Loader2 className="w-4 h-4 mx-4 animate-spin" /> : "Search"}
-    </Button>
-  );
-};
+interface SubmitButtonProps {
+  isSubmitting: boolean;
+}
 
-const FormDivider = () => {
-  return <div className="hidden sm:block h-14 w-px border-amber-500 border" />;
-};
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting }) => (
+  <Button
+    type="submit"
+    className="px-8 font-semibold sm:mt-5"
+    disabled={isSubmitting}
+  >
+    {isSubmitting ? (
+      <Loader2 className="w-4 h-4 mx-4 animate-spin" />
+    ) : (
+      "Search"
+    )}
+  </Button>
+);
+
+const FormDivider: React.FC = () => (
+  <div className="hidden sm:block h-14 w-px border-amber-500 border" />
+);

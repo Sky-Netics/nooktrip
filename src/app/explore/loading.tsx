@@ -1,15 +1,20 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
+import LoadingLottie from "@/components/LoadingLottie";
 
-export default function loading() {
+function Loading() {
   return (
-    <div>
-      <p className="text-lg font-medium">Result:</p>
-      <div className="mt-2 grid gap-6">
-        {Array.from(['first', 'second']).map((d) => (
-          <Skeleton key={d} className="h-64 sm:h-48 w-full" />
-        ))}
-      </div>
-    </div>
+    <LoadingLottie />
+
+    // <div>
+    //   <p className="text-lg font-medium">Result:</p>
+    //   <div className="mt-2 grid gap-6">
+    //     <div className="flex">
+    //     </div>
+    //     {/* {Array.from(['first', 'second']).map((d) => (
+    //       <Skeleton key={d} className="h-64 sm:h-48 w-full" />
+    //     ))} */}
+    //   </div>
+    // </div>
   );
 }
+
+export default Loading;

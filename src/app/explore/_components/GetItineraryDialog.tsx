@@ -28,9 +28,9 @@ export const GetItineraryDialog = ({
           Get Your Itinerary
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[475px] pt-12 text-primary-foreground">
+      <DialogContent className="max-w-xl pt-12 text-primary-foreground">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-medium">
+          <DialogTitle className="text-center text-2xl font-semibold">
             Get Your Itinerary
           </DialogTitle>
         </DialogHeader>
