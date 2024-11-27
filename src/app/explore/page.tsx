@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import ItineraryCard from "./_components/ItineraryCard";
 import ItineraryDetail from "./_components/ItineraryDetail";
 
+export const dynamic = 'force-dynamic';
+
 export default async function page({
   searchParams: { location, travelType, budget, detail },
 }: {

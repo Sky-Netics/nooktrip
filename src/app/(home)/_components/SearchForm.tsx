@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
 
 interface FormState {
   zodErrors?: Record<string, string[]>;
@@ -39,18 +39,6 @@ export default function SearchForm() {
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
-        setShowSuggestions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   useEffect(() => {
     const debounceTimeout = setTimeout(async () => {
@@ -144,6 +132,10 @@ export default function SearchForm() {
                   setShowSuggestions(true);
                 }
               }}
+              onBlur={() => {
+                // Small delay to allow click on suggestion to register
+                setTimeout(() => setShowSuggestions(false), 200);
+              }}
               className="pr-8"
             />
             {isLoading && (
@@ -153,15 +145,12 @@ export default function SearchForm() {
             )}
           </div>
           {showSuggestions && suggestions.length > 0 && (
-            <div 
-              ref={suggestionsRef}
-              className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1 max-h-[200px] overflow-y-auto"
-            >
+            <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1 max-h-[200px] overflow-y-auto">
               {suggestions.map((suggestion, index) => (
                 <div
                   key={index}
                   className="py-1.5 px-2 hover:bg-gray-50 cursor-pointer transition-colors duration-150 border-b last:border-b-0"
-                  onClick={() => handleSuggestionClick(suggestion)}
+                  onMouseDown={() => handleSuggestionClick(suggestion)}
                 >
                   <span className="text-xs text-gray-700">
                     {suggestion.properties.formatted}
