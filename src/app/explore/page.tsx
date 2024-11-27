@@ -16,6 +16,7 @@ async function ExploreContent({
   budget,
   detail
 }: SearchItinerary & { detail?: string }) {
+  // Remove artificial delay since we have proper loading states now
   const { data, error } = await searchItinerary({
     location,
     travelType,
@@ -35,7 +36,7 @@ async function ExploreContent({
     return <ItineraryDetail itinerary={selectedItinerary} />;
   } else {
     return (
-      <div>
+      <div className="w-full max-w-3xl mx-auto">
         <p className="text-lg font-medium">Result:</p>
         <div className="mt-2 grid gap-6">
           {data?.itineraries?.map((itinerary: Itinerary, index: number) => (

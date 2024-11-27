@@ -12,7 +12,7 @@ export default function ItineraryDetail({
   itinerary: Itinerary;
 }) {
   return (
-    <>
+    <div className="w-full max-w-3xl mx-auto">
       {/* <BackButton /> */}
       <p className="text-xl font-semibold">{itinerary.package_name}</p>
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
@@ -38,6 +38,6 @@ export default function ItineraryDetail({
 
         <GetItineraryDialog className="md:hidden" itinerary={itinerary} />
       </div>
-    </>
+    </div>
   );
 }
