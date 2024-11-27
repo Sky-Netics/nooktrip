@@ -1,12 +1,12 @@
-import { Itinerary } from '@/types/itinerary';
-import { Stop } from '@/types/stop';
+import { Itinerary } from "@/types/itinerary";
+import { Stop } from "@/types/stop";
 import { Fragment } from "react";
 import { GetItineraryDialog } from "./GetItineraryDialog";
 import IineraryDetailRoute from "./IineraryDetailRoute";
 import ItineraryDetailCard from "./ItineraryDetailCard";
 import ItinerarySummeryCard from "./ItinerarySummeryCard";
 
-export default async function ItineraryDetail({
+export default function ItineraryDetail({
   itinerary,
 }: {
   itinerary: Itinerary;

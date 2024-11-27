@@ -5,22 +5,17 @@ import { SearchItinerary } from "@/types/utils";
 import { redirect } from "next/navigation";
 import ItineraryCard from "./_components/ItineraryCard";
 import ItineraryDetail from "./_components/ItineraryDetail";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const dynamic = 'force-dynamic';
 
-export default async function page({
-  searchParams: { location, travelType, budget, detail },
-}: {
-  searchParams: SearchItinerary & { detail?: string };
-}) {
-  const { success } = SearchItinerarySchema.safeParse({
-    location,
-    travelType,
-    budget,
-  });
-
-  if (!success) redirect("/");
-
+async function ExploreContent({
+  location,
+  travelType,
+  budget,
+  detail
+}: SearchItinerary & { detail?: string }) {
   const { data, error } = await searchItinerary({
     location,
     travelType,
@@ -28,7 +23,7 @@ export default async function page({
   });
 
   if (error) {
-    return <div>Error Happend!</div>;
+    return <div>Error Happened!</div>;
   }
 
   const decodedDetails = decodeURIComponent(detail ?? "");
@@ -57,4 +52,29 @@ export default async function page({
       </div>
     );
   }
+}
+
+export default async function Page({
+  searchParams: { location, travelType, budget, detail },
+}: {
+  searchParams: SearchItinerary & { detail?: string };
+}) {
+  const { success } = SearchItinerarySchema.safeParse({
+    location,
+    travelType,
+    budget,
+  });
+
+  if (!success) redirect("/");
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <ExploreContent 
+        location={location}
+        travelType={travelType}
+        budget={budget}
+        detail={detail}
+      />
+    </Suspense>
+  );
 }
