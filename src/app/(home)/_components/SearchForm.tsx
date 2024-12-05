@@ -167,10 +167,10 @@ export default function SearchForm() {
         <div className="grid w-full sm:max-w-sm items-center gap-1.5">
           <Label htmlFor="travelComposite">Travel Composite</Label>
           <Select defaultValue="solo" name="travelType" required>
-            <SelectTrigger>
+            <SelectTrigger className="bg-white">
               <SelectValue placeholder="Select travel type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="solo">Solo Traveler</SelectItem>
               <SelectItem value="couple">Couple Travelers</SelectItem>
             </SelectContent>
@@ -189,6 +189,7 @@ export default function SearchForm() {
             placeholder="25"
             required
             min={0}
+            className="bg-white"
           />
           <FormMessage message={formState.zodErrors?.budget} type="error" />
         </div>

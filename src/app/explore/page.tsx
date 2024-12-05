@@ -4,7 +4,7 @@ import { Itinerary } from "@/types/itinerary";
 import { SearchItinerary } from "@/types/utils";
 import { redirect } from "next/navigation";
 import ItineraryCard from "./_components/ItineraryCard";
-import ItineraryDetail from "./_components/ItineraryDetail";
+import ItineraryDetailClientWrapper from "./_components/ItineraryDetailClientWrapper";
 import { Suspense } from "react";
 import Loading from "./loading";
 
@@ -16,7 +16,6 @@ async function ExploreContent({
   budget,
   detail
 }: SearchItinerary & { detail?: string }) {
-  // Remove artificial delay since we have proper loading states now
   const { data, error } = await searchItinerary({
     location,
     travelType,
@@ -33,7 +32,7 @@ async function ExploreContent({
   );
 
   if (selectedItinerary) {
-    return <ItineraryDetail itinerary={selectedItinerary} />;
+    return <ItineraryDetailClientWrapper itinerary={selectedItinerary} />;
   } else {
     return (
       <div className="w-full max-w-3xl mx-auto">

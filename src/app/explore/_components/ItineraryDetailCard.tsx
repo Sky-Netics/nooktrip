@@ -1,6 +1,9 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Stop } from "@/types/stop";
 import Image from "next/image";
+import { useActiveStop } from "@/context/ActiveStopContext";
 
 export default function ItineraryDetailCard({
   stop,
@@ -9,10 +12,18 @@ export default function ItineraryDetailCard({
   stop: Stop;
   number: number;
 }) {
-  // const [time, title] = stop?.start?.split(" - ");
+  const { activeIndex, setActiveIndex } = useActiveStop();
+  const isActive = activeIndex === number - 1;
+  const opacity = activeIndex === null || isActive ? "opacity-100" : "opacity-30";
 
   return (
-    <div className="w-full relative bg-card p-4 border border-primary flex gap-4 rounded-lg min-h-32">
+    <div 
+      className={`w-full relative bg-card p-4 border border-primary flex gap-4 rounded-lg min-h-32 transition-all duration-300 ${opacity} cursor-pointer hover:scale-[1.02]`}
+      onClick={() => {
+        const newIndex = activeIndex === (number - 1) ? null : number - 1;
+        setActiveIndex(newIndex);
+      }}
+    >
       <p className="text-[#FF7F50] font-bold text-4xl rounded-lg bg-[#E6E6E6] h-full px-4 flex items-center">
         {number}
       </p>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Itinerary } from "@/types/itinerary";
 import { Stop } from "@/types/stop";
 import { Fragment } from "react";
@@ -13,7 +15,6 @@ export default function ItineraryDetail({
 }) {
   return (
     <div className="w-full max-w-3xl mx-auto">
-      {/* <BackButton /> */}
       <p className="text-xl font-semibold">{itinerary.package_name}</p>
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
         <div className="md:basis-1/2  md:order-2 grid auto-rows-min justify-items-center">
@@ -29,7 +30,11 @@ export default function ItineraryDetail({
               <Fragment key={stop.location_address}>
                 <ItineraryDetailCard stop={stop} number={index + 1} />
                 {index < itinerary.stops.length - 1 && (
-                  <IineraryDetailRoute route={stop.path_to_next} />
+                  <IineraryDetailRoute 
+                    route={stop.path_to_next} 
+                    transportMode={itinerary.stops[index + 1].transport_mode}
+                    index={index}
+                  />
                 )}
               </Fragment>
             ))}
