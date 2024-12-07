@@ -33,7 +33,7 @@ async function ExploreContent({
   );
 
   if (selectedItinerary) {
-    return <ItineraryDetail itinerary={selectedItinerary} />;
+    return <ItineraryDetail itinerary={selectedItinerary} prevPath={`/explore?location=${location}&travelType=${travelType}&budget=${budget}`}/>;
   } else {
     return (
       <div className="w-full max-w-3xl mx-auto">
