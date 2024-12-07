@@ -3,9 +3,12 @@ import Link from "next/link";
 import React from "react";
 
 export default function IineraryDetailRoute({ route }: { route: string }) {
+
+  const dynamicRoute = route.split("/").pop();
+
   return (
     <Link
-      href={route}
+      href={route+`/@${dynamicRoute},18z/`}
       target="_blank"
       className="relative z-10 my-8 bg-[#e6e6e6] w-[90%] m-auto flex items-center rounded-lg gap-2 after:content-[''] after:absolute after:-z-10 after:h-[calc(100%+64px)] after:left-5 after:border-l-2 after:border-black/30 after:border-dashed"
     >
