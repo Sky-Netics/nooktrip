@@ -3,9 +3,17 @@ import Link from "next/link";
 import React from "react";
 
 export default function IineraryDetailRoute({ route }: { route: string }) {
+  
+
+  const parts = route.split('/'); 
+  const coordinates = parts[parts.length - 1].split(',');
+  const latitude = coordinates[0]; 
+  const longitude = coordinates[1]
+
+
   return (
     <Link
-      href={route}
+      href={`https://maps.google.com/maps?q=${latitude},${longitude}&zoom=15`}
       target="_blank"
       className="relative z-10 my-8 bg-[#e6e6e6] w-[90%] m-auto flex items-center rounded-lg gap-2 after:content-[''] after:absolute after:-z-10 after:h-[calc(100%+64px)] after:left-5 after:border-l-2 after:border-black/30 after:border-dashed"
     >
@@ -18,6 +26,7 @@ export default function IineraryDetailRoute({ route }: { route: string }) {
           alt="route"
         />
       </div>
+
       <p className="text-xs text-[11px] pe-1 break-all">{route}</p>
     </Link>
   );
