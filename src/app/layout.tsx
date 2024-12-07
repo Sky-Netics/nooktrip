@@ -18,6 +18,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
