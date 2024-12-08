@@ -7,6 +7,7 @@ import ItineraryCard from "./_components/ItineraryCard";
 import ItineraryDetailClientWrapper from "./_components/ItineraryDetailClientWrapper";
 import { Suspense } from "react";
 import Loading from "./loading";
+import ItineraryDetail from "./_components/ItineraryDetail";
 
 export const dynamic = 'force-dynamic';
 
@@ -32,7 +33,7 @@ async function ExploreContent({
   );
 
   if (selectedItinerary) {
-    return <ItineraryDetailClientWrapper itinerary={selectedItinerary} />;
+    return <ItineraryDetail itinerary={selectedItinerary} prevPath={`/explore?location=${location}&travelType=${travelType}&budget=${budget}`}/>;
   } else {
     return (
       <div className="w-full max-w-3xl mx-auto">

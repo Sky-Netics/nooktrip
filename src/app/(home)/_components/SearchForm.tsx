@@ -60,7 +60,7 @@ export default function SearchForm() {
         setSuggestions([]);
         setShowSuggestions(false);
       }
-    }, 300);
+      }, 300);
 
     return () => clearTimeout(debounceTimeout);
   }, [searchQuery]);
@@ -145,7 +145,7 @@ export default function SearchForm() {
             )}
           </div>
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1 max-h-[200px] overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 bg-white border rounded-md shadow-lg z-10 mt-1 max-h-[200px] sm:max-h-[160px] overflow-y-auto">
               {suggestions.map((suggestion, index) => (
                 <div
                   key={index}

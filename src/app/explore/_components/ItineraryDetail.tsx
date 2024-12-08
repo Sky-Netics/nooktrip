@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { Itinerary } from "@/types/itinerary";
 import { Stop } from "@/types/stop";
@@ -7,16 +7,26 @@ import { GetItineraryDialog } from "./GetItineraryDialog";
 import IineraryDetailRoute from "./IineraryDetailRoute";
 import ItineraryDetailCard from "./ItineraryDetailCard";
 import ItinerarySummeryCard from "./ItinerarySummeryCard";
-import BackButton from "@/components/BackButton";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function ItineraryDetail({
   itinerary,
+  prevPath
 }: {
   itinerary: Itinerary;
+  prevPath:string
 }) {
   return (
     <div className="w-full max-w-3xl mx-auto">
-     <BackButton/>
+      <div className="w-fit text-slate-800">
+        <Link href={prevPath}>
+          <div className="flex items-center gap-2 mb-6">
+            <ArrowLeft />
+            <div>{prevPath.split("=")[1].split("&")[0]}</div>
+          </div>
+        </Link>
+      </div>
       <p className="text-xl font-semibold">{itinerary.package_name}</p>
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
         <div className="md:basis-1/2  md:order-2 grid auto-rows-min justify-items-center">
@@ -25,7 +35,6 @@ export default function ItineraryDetail({
             className="hidden md:flex"
             itinerary={itinerary}
           />
-          
         </div>
         <div className="mt-6 md:mt-0 md:basis-1/2 flex justify-center md:justify-end">
           <div className="w-full flex flex-col max-w-md items-end justify-start">
@@ -33,11 +42,7 @@ export default function ItineraryDetail({
               <Fragment key={stop.location_address}>
                 <ItineraryDetailCard stop={stop} number={index + 1} />
                 {index < itinerary.stops.length - 1 && (
-                  <IineraryDetailRoute 
-                    route={stop.path_to_next} 
-                    transportMode={itinerary.stops[index + 1].transport_mode}
-                    index={index}
-                  />
+                  <IineraryDetailRoute route={stop.path_to_next} />
                 )}
               </Fragment>
             ))}
