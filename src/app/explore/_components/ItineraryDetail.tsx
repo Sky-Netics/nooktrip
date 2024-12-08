@@ -7,6 +7,7 @@ import { GetItineraryDialog } from "./GetItineraryDialog";
 import IineraryDetailRoute from "./IineraryDetailRoute";
 import ItineraryDetailCard from "./ItineraryDetailCard";
 import ItinerarySummeryCard from "./ItinerarySummeryCard";
+import BackButton from "@/components/BackButton";
 
 export default function ItineraryDetail({
   itinerary,
@@ -15,6 +16,7 @@ export default function ItineraryDetail({
 }) {
   return (
     <div className="w-full max-w-3xl mx-auto">
+     <BackButton/>
       <p className="text-xl font-semibold">{itinerary.package_name}</p>
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
         <div className="md:basis-1/2  md:order-2 grid auto-rows-min justify-items-center">
@@ -23,6 +25,7 @@ export default function ItineraryDetail({
             className="hidden md:flex"
             itinerary={itinerary}
           />
+          
         </div>
         <div className="mt-6 md:mt-0 md:basis-1/2 flex justify-center md:justify-end">
           <div className="w-full flex flex-col max-w-md items-end justify-start">
