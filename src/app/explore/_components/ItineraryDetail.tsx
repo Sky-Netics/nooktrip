@@ -9,24 +9,26 @@ import ItineraryDetailCard from "./ItineraryDetailCard";
 import ItinerarySummeryCard from "./ItinerarySummeryCard";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import BackButton from "@/components/BackButton";
 
 export default function ItineraryDetail({
   itinerary,
-  prevPath
+  // prevPath
 }: {
   itinerary: Itinerary;
-  prevPath:string
+  // prevPath:string
 }) {
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="w-fit text-slate-800">
+      <BackButton />
+      {/* <div className="w-fit text-slate-800">
         <Link href={prevPath}>
           <div className="flex items-center gap-2 mb-6">
             <ArrowLeft />
             <div>{prevPath.split("=")[1].split("&")[0]}</div>
           </div>
         </Link>
-      </div>
+      </div> */}
       <p className="text-xl font-semibold">{itinerary.package_name}</p>
       <div className="my-8 md:my-12 flex flex-col items-center justify-center md:flex-row md:items-start gap-6 md:gap-12">
         <div className="md:basis-1/2  md:order-2 grid auto-rows-min justify-items-center">
