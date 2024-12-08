@@ -1,3 +1,5 @@
+'use client'
+
 import { Itinerary } from "@/types/itinerary";
 import { Stop } from "@/types/stop";
 import { Fragment } from "react";
