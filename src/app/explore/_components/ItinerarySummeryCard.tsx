@@ -1,64 +1,47 @@
+"use client";
+
 import { Itinerary } from "@/types/itinerary";
 import Image from "next/image";
+import RouteMap from "@/components/RouteMap";
 
-export default function ItinerarySummeryCard({
-  itinerary,
-}: {
+interface Props {
   itinerary: Itinerary;
-}) {
+}
+
+export default function ItinerarySummeryCard({ itinerary }: Props) {
   return (
     <div className="bg-yellow-900 text-[#FFFFF0] p-4 md:p-6 rounded-lg">
-      {itinerary.map_image ? (
-        <img
-          src={`data:image/png;base64,${itinerary.map_image}`}
-          className="rounded-md w-[640px]"
-          alt={`Route map for ${itinerary.package_name}`}
-          width={700}
-          height={600}
-        />
-      ) : (
-        // Fallback image in case map_image is not available
-        <Image
-          src="/explore/detail.png"
-          className="rounded-md w-[640px]"
-          width={700}
-          height={600}
-          alt="detail-image"
-        />
-      )}
-      <p className="mt-4 text-base font-medium">{itinerary.summary}</p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">start: </span>
-        {itinerary.start}
-      </p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">end: </span>
-        {itinerary.end}
-      </p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">
-          Duration:{" "}
-        </span>
-        {itinerary.total_duration}
-      </p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">
-          Mode of Transport:{" "}
-        </span>
-        {itinerary.transport_mode}
-      </p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">
-          Approximately Cost:{" "}
-        </span>
-        {`${itinerary.total_cost} ${itinerary.location_currency}`}
-      </p>
-      <p className="mt-4 text-xs">
-        <span className="font-semibold text-[13px] leading-tight">
-          Distance:{" "}
-        </span>
-        {itinerary.total_distance}
-      </p>
+      <RouteMap
+        stops={itinerary.stops}
+        className="shadow-lg shadow-black/30 mb-6"
+      />
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-4">
+          <div className="flex gap-2 items-center">
+            <Image
+              className="w-4 h-4 brightness-0 invert"
+              src="/icons/duration.png"
+              width={50}
+              height={50}
+              alt="duration"
+            />
+            <span>{itinerary.total_duration}</span>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Image
+              className="w-4 h-4 brightness-0 invert"
+              src="/icons/cost.png"
+              width={50}
+              height={50}
+              alt="cost"
+            />
+            <span>
+              {itinerary.total_cost} {itinerary.location_currency}
+            </span>
+          </div>
+        </div>
+        <p className="text-sm">{itinerary.summary}</p>
+      </div>
     </div>
   );
 }

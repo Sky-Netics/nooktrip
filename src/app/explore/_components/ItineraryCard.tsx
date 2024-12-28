@@ -43,8 +43,7 @@ export default function ItineraryCard({itinerary, number, link}: {itinerary: Iti
 
               <Link
                 href={link}
-                className="sm:mt-4 max-sm:absolute max-sm:bottom-4 max-sm:right-4 sm:justify-self-start"
-              >
+                className="sm:mt-4 max-sm:absolute max-sm:bottom-4 max-sm:right-4 sm:justify-self-start">
                 <Button size="sm">
                   View Details{" "}
                   <ChevronRight className="w-4 h-4 hidden sm:block" />

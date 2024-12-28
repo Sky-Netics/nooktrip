@@ -4,9 +4,10 @@ import { Itinerary } from "@/types/itinerary";
 import { SearchItinerary } from "@/types/utils";
 import { redirect } from "next/navigation";
 import ItineraryCard from "./_components/ItineraryCard";
-import ItineraryDetail from "./_components/ItineraryDetail";
+import ItineraryDetailClientWrapper from "./_components/ItineraryDetailClientWrapper";
 import { Suspense } from "react";
 import Loading from "./loading";
+import ItineraryDetail from "./_components/ItineraryDetail";
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,6 @@ async function ExploreContent({
   budget,
   detail
 }: SearchItinerary & { detail?: string }) {
-  // Remove artificial delay since we have proper loading states now
   const { data, error } = await searchItinerary({
     location,
     travelType,
